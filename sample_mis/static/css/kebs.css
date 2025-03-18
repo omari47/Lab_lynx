@@ -1,0 +1,36 @@
+/* Responsive table */
+.table-responsive {
+    overflow-x: auto;
+    min-height: 300px;
+}
+
+/* Status badges */
+.badge.bg-secondary { background-color: #6c757d !important; }
+.badge.bg-warning { background-color: #ffc107 !important; }
+.badge.bg-success { background-color: #198754 !important; }
+
+/* Search container */
+.tracking-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    #searchButton {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .table td, .table th {
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,483 @@
+{% load rest_framework %}
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="utf-8">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Login - Sample Track</title>#}
+{#  <!-- Bootstrap CSS -->#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <style>#}
+{#    body {#}
+{#      background-color: #f5f5f5;#}
+{#      background-image: url("{% static 'assets/img/background1.jpg' %}");  #}
+{#      font-family: 'Nunito', sans-serif;#}
+{#    }#}
+{#    .login-box {#}
+{#      max-width: 400px;#}
+{#      background-color: white;#}
+{#      padding: 30px;#}
+{#      border-radius: 8px;#}
+{#      box-shadow: 0 4px 8px rgba(0,0,0,0.1);#}
+{#      margin-top: 80px;#}
+{#    }#}
+{#    .login-box h2 {#}
+{#      color: #00334e;#}
+{#    }#}
+{#    .btn-primary {#}
+{#      background-color: #004a73;#}
+{#      border: none;#}
+{#    }#}
+{#    .login-link a {#}
+{#      color: #004a73;#}
+{#      text-decoration: none;#}
+{#    }#}
+{#    .login-link a:hover {#}
+{#      text-decoration: underline;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <main id="main" class="main">#}
+{#    <div class="container">#}
+{#      <div class="login-box mx-auto">#}
+{#        <h2 class="text-center mb-4">Login to Sample Track</h2>#}
+{#        <form method="post" action="{% url 'login' %}">#}
+{#          {% csrf_token %}#}
+{#          {{ form.non_field_errors }}#}
+{#          <div class="mb-3">#}
+{#            <label for="id_username" class="form-label">Username</label>#}
+{#            {{ form.username }}#}
+{#            {{ form.username.errors }}#}
+{#          </div>#}
+{#          <div class="mb-3">#}
+{#            <label for="id_password" class="form-label">Password</label>#}
+{#            {{ form.password }}#}
+{#            {{ form.password.errors }}#}
+{#          </div>#}
+{#          <button type="submit" class="btn btn-primary w-100">Login</button>#}
+{#        </form>#}
+{#        <div class="mt-3 text-center login-link">#}
+{#          <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </main>#}
+{#  <!-- Bootstrap JS Bundle -->#}
+{#  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Login -  Lab Lynx</title>#}
+{#    <!-- Bootstrap CSS -->#}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">#}
+{#    <style>#}
+{#        /* Background with Warm Gradient Overlay and Background Image */#}
+{#        body {#}
+{#            background: linear-gradient(135deg, rgba(29, 175, 200, 0.9), rgba(18, 103, 156, 0.9)), url("{% static 'assets/img/background1.jpg' %}");#}
+{#            background-size: cover;#}
+{#            background-position: center;#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            height: 100vh;#}
+{#            margin: 0;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: center;#}
+{#        }#}
+{##}
+{#        /* Glassmorphism Effect for the Login Box */#}
+{#        .login-box {#}
+{#            background: rgb(194, 237, 232);#}
+{#            backdrop-filter: blur(10px);#}
+{#            -webkit-backdrop-filter: blur(10px);#}
+{#            max-width: 400px;#}
+{#            width: 100%;#}
+{#            padding: 50px;#}
+{#            border-radius: 30px; /* More rounded corners */#}
+{#            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);#}
+{#            animation: fadeIn 1s ease-in-out;#}
+{#        }#}
+{##}
+{#        .login-box h2 {#}
+{#            color: #1e3c72;#}
+{#            font-weight: 700;#}
+{#            margin-bottom: 30px;#}
+{#        }#}
+{##}
+{#        /* Fully Rounded, Modern Input Fields */#}
+{#        .form-control {#}
+{#            border: 1px solid #dfe7f1;#}
+{#            border-radius: 50px;#}
+{#            padding: 15px 20px;#}
+{#            font-size: 16px;#}
+{#            transition: border-color 0.3s, box-shadow 0.3s;#}
+{#        }#}
+{##}
+{#        .form-control:focus {#}
+{#            border-color: #1e3c72;#}
+{#            box-shadow: 0 0 10px rgba(30, 60, 114, 0.2);#}
+{#            #}
+{#        }#}
+{##}
+{#        /* Ensure Placeholder Text is Visible */#}
+{#        .form-control::placeholder {#}
+{#            color: #999;#}
+{#            font-size: 16px;#}
+{#        }#}
+{##}
+{#        .btn-primary {#}
+{#            background: linear-gradient(135deg, #1e3c72, #2a5298);#}
+{#            border: none;#}
+{#            border-radius: 20px;#}
+{#            padding: 15px;#}
+{#            font-size: 16px;#}
+{#            font-weight: 600;#}
+{#            transition: background 0.1s;#}
+{#        }#}
+{##}
+{#        .btn-primary:hover {#}
+{#            background: linear-gradient(135deg, #1a3362, #244a80);#}
+{#        }#}
+{##}
+{#        .login-link a {#}
+{#            color: #1e3c72;#}
+{#            font-weight: 600;#}
+{#            text-decoration: none;#}
+{#        }#}
+{##}
+{#        .login-link a:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{##}
+{#        @keyframes fadeIn {#}
+{#            from {#}
+{#                opacity: 0;#}
+{#                transform: translateY(-20px);#}
+{#            }#}
+{#            to {#}
+{#                opacity: 1;#}
+{#                transform: translateY(0);#}
+{#            }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#<main id="main" class="main">#}
+{#    <div class="login-box">#}
+{#        <h2 class="text-center">#}
+{#            <strong><span> LabLynx </span></strong></h2>#}
+{#        <form method="post" action="{% url 'login' %}">#}
+{#            {% csrf_token %}#}
+{#            {{ form.non_field_errors }}#}
+{#            <div class="mb-3">#}
+{#                <label for="id_username" class="form-label">Username</label>#}
+{#                {{ form.username }}#}
+{#                {{ form.username.errors }}#}
+{#            </div>#}
+{#            <div class="mb-3">#}
+{#                <label for="id_password" class="form-label">Password</label>#}
+{#                {{ form.password }}#}
+{#                {{ form.password.errors }}#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-primary w-100">Login</button>#}
+{#        </form>#}
+{#        <div class="mt-3 text-center login-link">#}
+{#            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>#}
+{#        </div>#}
+{#    </div>#}
+{#</main>#}
+{#<!-- Bootstrap JS Bundle -->#}
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Login - Lab Lynx</title>#}
+{#    <!-- Bootstrap CSS -->#}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">#}
+{#    <style>#}
+{#        /* Background with Warm Gradient Overlay and Background Image */#}
+{#        body {#}
+{#            background: linear-gradient(135deg, rgba(29, 175, 200, 0.9), rgba(18, 103, 156, 0.9)), url("{% static 'assets/img/background1.jpg' %}");#}
+{#            background-size: cover;#}
+{#            background-position: center;#}
+{#            font-family: 'Nunito', sans-serif;#}
+{#            height: 100vh;#}
+{#            margin: 0;#}
+{#            display: flex;#}
+{#            align-items: center;#}
+{#            justify-content: center;#}
+{#        }#}
+{##}
+{#        /* Glassmorphism Effect for the Login Box */#}
+{#        .login-box {#}
+{#            background: rgba(255, 255, 255, 0.2); /* Increased transparency */#}
+{#            backdrop-filter: blur(15px);#}
+{#            -webkit-backdrop-filter: blur(15px);#}
+{#            max-width: 500px; /* Increased width */#}
+{#            width: 100%;#}
+{#            padding: 60px; /* Increased padding */#}
+{#            border-radius: 30px; /* More rounded corners */#}
+{#            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */#}
+{#            animation: fadeIn 1s ease-in-out;#}
+{#        }#}
+{##}
+{#        .login-box h2 {#}
+{#            color: rgba(11, 10, 10, 0.65);#}
+{#            font-weight: 700;#}
+{#            margin-bottom: 30px;#}
+{#        }#}
+{##}
+{#        /* Fully Rounded, Modern Input Fields */#}
+{#        .form-control {#}
+{#            border: 1px solid #dfe7f1;#}
+{#            border-radius: 50px;#}
+{#            padding: 15px 20px;#}
+{#            font-size: 16px;#}
+{#            transition: border-color 0.3s, box-shadow 0.3s;#}
+{#            background: rgba(255, 255, 255, 0.8); /* Slightly translucent input background */#}
+{#        }#}
+{##}
+{#        .form-control:focus {#}
+{#            border-color: #1e3c72;#}
+{#            box-shadow: 0 0 10px rgba(30, 60, 114, 0.2);#}
+{#        }#}
+{##}
+{#        .form-control::placeholder {#}
+{#            color: #999;#}
+{#            font-size: 16px;#}
+{#        }#}
+{##}
+{#        .btn-primary {#}
+{#            background: linear-gradient(135deg, #1e3c72, #2a5298);#}
+{#            border: none;#}
+{#            border-radius: 20px;#}
+{#            padding: 15px;#}
+{#            font-size: 16px;#}
+{#            font-weight: 600;#}
+{#            transition: background 0.1s;#}
+{#        }#}
+{##}
+{#        .btn-primary:hover {#}
+{#            background: linear-gradient(135deg, #1a3362, #244a80);#}
+{#        }#}
+{##}
+{#        .login-link a {#}
+{#            color: #1e3c72;#}
+{#            font-weight: 600;#}
+{#            text-decoration: none;#}
+{#        }#}
+{##}
+{#        .login-link a:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{##}
+{#        @keyframes fadeIn {#}
+{#            from {#}
+{#                opacity: 0;#}
+{#                transform: translateY(-20px);#}
+{#            }#}
+{#            to {#}
+{#                opacity: 1;#}
+{#                transform: translateY(0);#}
+{#            }#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#<main id="main" class="main">#}
+{#    <div class="login-box">#}
+{#        <h2 class="text-center">#}
+{#            <strong><span>Lab Lynx</span></strong>#}
+{#        </h2>#}
+{#        <form method="post" action="{% url 'login' %}">#}
+{#            {% csrf_token %}#}
+{#            {{ form.non_field_errors }}#}
+{#            <div class="mb-3">#}
+{#                <label for="id_username" class="form-label">Username</label>#}
+{#                {{ form.username }}#}
+{#                {{ form.username.errors }}#}
+{#            </div>#}
+{#            <div class="mb-3 ">#}
+{#                <label for="id_password" class="form-label">Password</label>#}
+{#                {{ form.password }}#}
+{#                {{ form.password.errors }}#}
+{#            </div>#}
+{#            <button type="submit" class="btn btn-primary w-100">Login</button>#}
+{#        </form>#}
+{#        <div class="mt-3 text-center login-link">#}
+{#            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>#}
+{#        </div>#}
+{#    </div>#}
+{#</main>#}
+{#<!-- Bootstrap JS Bundle -->#}
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+{##}
+{##}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Lab Lynx</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
+  <style>
+    /* Background with Warm Gradient Overlay and Background Image */
+    body {
+      background: linear-gradient(135deg, rgba(29,175,200,0.9), rgba(18,103,156,0.9)),
+                  url("{% static 'assets/img/background1.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      font-family: 'Nunito', sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Glassmorphism Effect for the Login Box */
+    .login-box {
+      background: rgba(255, 255, 255, 0.2); /* translucent background */
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box h2 {
+      color: #0d1b2a; /* Dark font for clarity */
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* Minimal, Modern Input Fields with Icons */
+    .input-group {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+      transition: border-color 0.3s;
+      margin-bottom: 25px;
+    }
+    .input-group:hover {
+      border-bottom-color: #dfe7f1;
+    }
+    .input-group:focus-within {
+      border-bottom-color: #0d1b2a;
+    }
+    .input-group-text {
+      background: transparent;
+      border: none;
+      color: #0d1b2a;
+      font-size: 1.2rem;
+    }
+    .form-control {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      outline: none;
+      border-radius: 0;
+      padding-left: 10px;
+    }
+    .form-control:focus {
+      box-shadow: none;
+    }
+    .form-control::placeholder {
+      color: #555;
+      font-size: 16px;
+    }
+
+    /* Button and Link Styles */
+    .btn-primary {
+      background: linear-gradient(135deg, #0d1b2a, #1e3c72);
+      border: none;
+      border-radius: 50px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0a1420, #16325a);
+    }
+    .login-link a {
+      color: #0d1b2a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+<main id="main" class="main">
+  <div class="login-box">
+    <h2><strong><span>Lab Lynx</span></strong></h2>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <!-- Username Field with Icon -->
+      <div class="mb-4">
+        <div class="input-group">
+          <span class="input-group-text "><i class="bi bi-person"></i></span>
+         {{ form.username|add_class:"form-control" }}
+        </div>
+        {{ form.username.errors }}
+      </div>
+      <!-- Password Field with Icon -->
+      <div class="mb-4">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock"></i></span>
+         {{ form.password|add_class:"form-control" }}
+        </div>
+        {{ form.password.errors }}
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <div class="mt-4 text-center login-link">
+      <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+  </div>
+</main>
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

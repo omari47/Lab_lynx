@@ -1,0 +1,116 @@
+{% extends 'master.html' %}  <!-- Extend the master template -->
+
+{% block title %}
+    <title>Sample Tracking - Sample Track</title>
+{% endblock %}
+
+{% block content %}
+    <!-- ======= Main Content ======= -->
+    <main id="main" class="main">
+        <div class="container">
+            <div class="tracking-container">
+                <h2><i class="bi bi-search"></i> Track Sample</h2>
+
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <div class="input-group">
+                        <input type="text" id="searchQuery" class="form-control"
+                               placeholder="Enter Sample ID or Batch Number" aria-label="Search">
+                        <button type="button" id="searchButton" class="btn btn-primary"><i class="bi bi-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Tracking Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="sampleTable">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Sample ID</th>
+                            <th>Sample Type</th>
+                            <th>Testing Status</th>
+                            <th>Test Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Data will be populated dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main><!-- End Main Content -->
+    <!-- Hidden element to store URL pattern -->
+    
+    <!-- JavaScript for Live Data Fetching -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchButton = document.getElementById('searchButton');
+            const searchQuery = document.getElementById('searchQuery');
+            const sampleTableBody = document.querySelector('#sampleTable tbody');
+
+            // Function to fetch and display data
+            function fetchData(query = '') {
+                fetch(`/api/samples/?search=${query}`)  // Replace with your API endpoint
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear existing table rows
+                        sampleTableBody.innerHTML = '';
+
+                        // Populate table with new data
+                        data.forEach(sample => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                            <td>${sample.id}</td>
+                            <td>${sample.type}</td>
+                            <td><span class="badge ${getStatusClass(sample.status)}">${sample.status}</span></td>
+                            <td>${sample.date}</td>
+                            <td>
+                                <a href="/sample-details/${sample.id}" class="btn btn-sm btn-primary"><i class="bi bi-eye"></i> View Details</a>
+                            </td>
+                        `;
+                            sampleTableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            // Function to get Bootstrap badge class based on status
+            function getStatusClass(status) {
+                switch (status.toLowerCase()) {
+                    case 'pending':
+                        return 'bg-secondary';
+                    case 'in progress':
+                        return 'bg-warning';
+                    case 'completed':
+                        return 'bg-success';
+                    default:
+                        return 'bg-secondary';
+                }
+            }
+
+            // Fetch data on page load
+            fetchData();
+
+            // Fetch data on search button click
+            searchButton.addEventListener('click', () => {
+                fetchData(searchQuery.value);
+            });
+
+            // Fetch data on Enter key press in search bar
+            searchQuery.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    fetchData(searchQuery.value);
+                }
+            });
+
+            // Refresh data every 10 seconds
+            setInterval(() => {
+                fetchData(searchQuery.value);
+            }, 10000);
+        });
+        
+    </script>
+{% endblock %}

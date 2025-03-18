@@ -1,0 +1,402 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    {% block title %}
+        <title>Lab Lynx</title>
+    {% endblock %}
+
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/kebs_logo.png' %}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        body {
+            background-color: #f5f5f5; /* Light gray background */
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* Header */
+        header.header {
+            background-color: #003366; /* Dark blue */
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-left: 0rem;
+        }
+
+        header.header a.logo img {
+            height: 40px;
+        }
+
+        header.header .logo span {
+            color: #ffffff;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #e6f7ff; /* Light blue */
+            color: #003366; /* Dark blue text */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar .nav-link {
+            color: #003366; /* Dark blue links */
+            font-size: 17px;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #99d6ff; /* Slightly darker light blue for active */
+            color: #003366;
+        }
+
+        .sidebar-divider {
+            border-color: #99d6ff;
+        }
+
+        /* Sidebar Toggle Button */
+        .toggle-sidebar-btn {
+            background-color: #66ccff; /* Bright light blue */
+            color: #003366;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            background-color: #33b5e5;
+        }
+
+        /* Footer */
+        footer.footer {
+            background-color: #003366; /* Dark blue */
+            color: #cce7ff; /* Light blue text */
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        footer.footer .copyright {
+            color: #cce7ff;
+        }
+
+        footer.footer a {
+            color: #66ccff; /* Light blue links */
+        }
+
+        footer.footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content */
+        .main {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #003366; /* Dark blue */
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #002244;
+        }
+
+        .btn-danger {
+            background-color: #b32d00;
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+            background-color: #802000;
+        }
+
+        .btn-warning {
+            background-color: #ffc107; /* Gold */
+            border: none;
+            color: #000000;
+        }
+
+        .btn-warning:hover {
+            background-color: #ff9900;
+        }
+
+        /* Form Controls */
+        .form-control {
+            border: 1px solid #003366;
+            border-radius: 5px;
+        }
+
+        .form-control:focus {
+            border-color: #002244;
+            box-shadow: 0 0 5px rgba(0, 34, 68, 0.5);
+        }
+
+        /* Login Box */
+        .login-box {
+            background-color: rgba(0, 51, 102, 0.8); /* Semi-transparent dark blue */
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-box h2 {
+            color: #ffc107; /* Gold accent */
+        }
+
+        .login-box a {
+            color: #cce7ff;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Table Styles */
+        .table thead {
+            background-color: #003366;
+            color: #ffffff;
+        }
+
+        .table tbody tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            background-color: #003366;
+            color: #ffffff;
+        }
+
+        .back-to-top:hover {
+            background-color: #002244;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="master.html" class="logo d-flex align-items-center">
+            <img src="{% static 'assets/img/kebs_logo.png' %}" alt="#">
+            <strong><span class="d-none d-lg-block">Lab Lynx</span></strong>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">
+                        <i class="bi bi-person-plus"></i> Register
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+</header><!-- End Header -->
+<!-- Flash Messages -->
+<div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+</div><!-- End Flash Messages -->
+
+<!-- ======= Sidebar ======= -->
+<div>
+    <div id="app">
+        <aside id="sidebar" class="sidebar">
+            <aside id="sidebar" class="sidebar">
+
+                <ul class="sidebar-nav" id="sidebar-nav">
+                    {# Divider #}
+
+                    <hr class="sidebar-divider my-0">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{% url 'dashboard' %}">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li><!-- End Dashboard Nav -->
+
+                    {#   divider #}
+                    <hr class="sidebar-divider">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{% url 'sample_submission' %}">
+                            <i class="bi bi-list"></i>
+                            <span>Sample Submission</span>
+                        </a>
+                        <hr class="sidebar-divider">
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{% url 'sample_tracking' %}">
+                            <i class="bi bi-boxes"></i>
+
+                            <span>Sample Tracking</span>
+                        </a>
+
+                        <hr class="sidebar-divider">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{% url 'label_generation' %}">
+                            <i class="bi bi-wallet2"></i>
+
+                            <span>Label Generation</span>
+                        </a>
+
+
+                    </li>
+                    <!-- In sidebar navigation -->
+                    <li class="nav-item">
+                        <hr class="sidebar-divider">
+                        <a class="nav-link collapsed" href="{% url 'testing_results' %}">
+                            <i class="bi bi-clipboard-data"></i>
+                            <span>Testing Results</span>
+                        </a>
+                    </li>
+
+                    <hr class="sidebar-divider">
+                    <li class="nav-item">
+                        <!-- In your sidebar template -->
+                        <a href="{% url 'data_management' %}" class="nav-link">
+                            <i class="bi bi-database"></i> Data Management
+                        </a>
+                    </li>
+                    <hr class="sidebar-divider">
+
+
+                </ul>
+
+            </aside><!-- End Sidebar-->  <!-- Sidebar content here -->
+        </aside>
+
+        <main id="main" class="main">
+
+            {% block content %}
+                <!-- Main content here -->
+            {% endblock %}
+        </main>
+        <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSidebar">
+            Toggle Sidebar
+        </button>
+
+
+    </div>
+</div>
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer text-center py-3">
+    <div class="container">
+        <p class="mb-0 text-white">
+            &copy; 2025 <strong>Lab Lynx</strong>. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.querySelector('.toggle-sidebar-btn');
+        const mainContent = document.getElementById('main');
+        const footer = document.getElementById('footer');
+
+        toggleSidebarBtn.addEventListener('click', function () {
+            sidebar.classList.toggle('sidebar-collapsed');
+            mainContent.classList.toggle('toggle-sidebar');
+            footer.classList.toggle('toggle-sidebar');
+        });
+    });
+
+
+</script>
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+<script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+<script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
+<script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+<script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+
+
+{% block extra_js %}
+
+{% endblock %}
+</body>
+
+</html>
