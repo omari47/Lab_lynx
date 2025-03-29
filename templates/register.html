@@ -1,388 +1,171 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#  <meta charset="utf-8">#}
-{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#  <title>Register - Sample Track</title>#}
-{#  <!-- Bootstrap CSS -->#}
-{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">#}
-{#  <style>#}
-{#    body {#}
-{#      background-color: #f5f5f5;#}
-{#      font-family: 'Nunito', sans-serif;#}
-{#    }#}
-{#    .login-box {#}
-{#      max-width: 400px;#}
-{#      background-color: white;#}
-{#      padding: 30px;#}
-{#      border-radius: 8px;#}
-{#      box-shadow: 0 4px 8px rgba(0,0,0,0.1);#}
-{#      margin-top: 80px;#}
-{#    }#}
-{#    .login-box h2 {#}
-{#      color: #00334e;#}
-{#    }#}
-{#    .btn-primary {#}
-{#      background-color: #004a73;#}
-{#      border: none;#}
-{#    }#}
-{#    .login-link a {#}
-{#      color: #004a73;#}
-{#      text-decoration: none;#}
-{#    }#}
-{#    .login-link a:hover {#}
-{#      text-decoration: underline;#}
-{#    }#}
-{#  </style>#}
-{#</head>#}
-{#<body>#}
-{#  <main id="main" class="main">#}
-{#    <div class="container">#}
-{#      <div class="login-box mx-auto">#}
-{#        <h2 class="text-center mb-4">Register for Sample Track</h2>#}
-{#        <form method="post" action="{% url 'register' %}">#}
-{#          {% csrf_token %}#}
-{#          <div class="mb-3">#}
-{#            <label for="id_username" class="form-label">Username</label>#}
-{#            <input type="text" class="form-control" name="username" id="id_username" required>#}
-{#          </div>#}
-{#          <div class="mb-3">#}
-{#            <label for="id_email" class="form-label">Email</label>#}
-{#            <input type="email" class="form-control" name="email" id="id_email" required>#}
-{#          </div>#}
-{#          <div class="mb-3">#}
-{#            <label for="id_password1" class="form-label">Password</label>#}
-{#            <input type="password" class="form-control" name="password1" id="id_password1" required>#}
-{#          </div>#}
-{#          <div class="mb-3">#}
-{#            <label for="id_password2" class="form-label">Confirm Password</label>#}
-{#            <input type="password" class="form-control" name="password2" id="id_password2" required>#}
-{#          </div>#}
-{#          <button type="submit" class="btn btn-primary w-100">Register</button>#}
-{#        </form>#}
-{#        <div class="mt-3 text-center login-link">#}
-{#          <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
-{#  </main>#}
-{#  <!-- Bootstrap JS Bundle -->#}
-{#  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>#}
-{#</body>#}
-{#</html>#}
-{#{% load static %}#}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#  <meta charset="utf-8">#}
-{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#  <title>Register - Lab Lynx</title>#}
-{#  <!-- Bootstrap CSS -->#}
-{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">#}
-{#  <!-- Bootstrap Icons -->#}
-{#  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">#}
-{#  <!-- Google Fonts -->#}
-{#  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">#}
-{#  <style>#}
-{#    body {#}
-{#      background: linear-gradient(135deg, rgba(29,175,200,0.9), rgba(18,103,156,0.9)),#}
-{#                  url("{% static 'assets/img/background1.jpg' %}");#}
-{#      background-size: cover;#}
-{#      background-position: center;#}
-{#      font-family: 'Nunito', sans-serif;#}
-{#      height: 100vh;#}
-{#      margin: 0;#}
-{#      display: flex;#}
-{#      align-items: center;#}
-{#      justify-content: center;#}
-{#    }#}
-{##}
-{#    .register-box {#}
-{#      background: rgba(255, 255, 255, 0.2);#}
-{#      backdrop-filter: blur(15px);#}
-{#      -webkit-backdrop-filter: blur(15px);#}
-{#      max-width: 500px;#}
-{#      width: 100%;#}
-{#      padding: 40px;#}
-{#      border-radius: 20px;#}
-{#      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);#}
-{#      animation: fadeIn 1s ease-in-out;#}
-{#    }#}
-{##}
-{#    .register-box h2 {#}
-{#      color: #0d1b2a;#}
-{#      font-weight: 700;#}
-{#      margin-bottom: 30px;#}
-{#      text-align: center;#}
-{#    }#}
-{##}
-{#    .input-group {#}
-{#      border-bottom: 2px solid rgba(255, 255, 255, 0.4);#}
-{#      transition: border-color 0.3s;#}
-{#      margin-bottom: 25px;#}
-{#    }#}
-{#    .input-group:hover {#}
-{#      border-bottom-color: #dfe7f1;#}
-{#    }#}
-{#    .input-group:focus-within {#}
-{#      border-bottom-color: #0d1b2a;#}
-{#    }#}
-{#    .input-group-text {#}
-{#      background: transparent;#}
-{#      border: none;#}
-{#      color: #0d1b2a;#}
-{#      font-size: 1.2rem;#}
-{#    }#}
-{#    .form-control {#}
-{#      border: none;#}
-{#      background: transparent;#}
-{#      box-shadow: none;#}
-{#      outline: none;#}
-{#      border-radius: 0;#}
-{#      padding-left: 10px;#}
-{#    }#}
-{#    .form-control::placeholder {#}
-{#      color: #555;#}
-{#      font-size: 16px;#}
-{#    }#}
-{##}
-{#    .btn-primary {#}
-{#      background: linear-gradient(135deg, #0d1b2a, #1e3c72);#}
-{#      border: none;#}
-{#      border-radius: 50px;#}
-{#      padding: 15px;#}
-{#      font-size: 16px;#}
-{#      font-weight: 600;#}
-{#      transition: background 0.3s;#}
-{#      width: 100%;#}
-{#      margin-top: 20px;#}
-{#    }#}
-{#    .btn-primary:hover {#}
-{#      background: linear-gradient(135deg, #0a1420, #16325a);#}
-{#    }#}
-{#    .login-link a {#}
-{#      color: #0d1b2a;#}
-{#      font-weight: 600;#}
-{#      text-decoration: none;#}
-{#    }#}
-{#    .login-link a:hover {#}
-{#      text-decoration: underline;#}
-{#    }#}
-{##}
-{#    @keyframes fadeIn {#}
-{#      from {#}
-{#        opacity: 0;#}
-{#        transform: translateY(-20px);#}
-{#      }#}
-{#      to {#}
-{#        opacity: 1;#}
-{#        transform: translateY(0);#}
-{#      }#}
-{#    }#}
-{#  </style>#}
-{#</head>#}
-{#<body>#}
-{#<main id="main" class="main">#}
-{#  <div class="register-box">#}
-{#    <h2>Register</h2>#}
-{#    <form method="post" action="{% url 'register' %}">#}
-{#      {% csrf_token %}#}
-{#      {{ form.non_field_errors }}#}
-{#      <!-- Username Field -->#}
-{#      <div class="mb-4">#}
-{#        <div class="input-group">#}
-{#          <span class="input-group-text"><i class="bi bi-person"></i></span>#}
-{#          {{ form.username }}#}
-{#        </div>#}
-{#        {{ form.username.errors }}#}
-{#      </div>#}
-{#      <!-- Email Field -->#}
-{#      <div class="mb-4">#}
-{#        <div class="input-group">#}
-{#          <span class="input-group-text"><i class="bi bi-envelope"></i></span>#}
-{#          {{ form.email }}#}
-{#        </div>#}
-{#        {{ form.email.errors }}#}
-{#      </div>#}
-{#      <!-- Password Field -->#}
-{#      <div class="mb-4">#}
-{#        <div class="input-group">#}
-{#          <span class="input-group-text"><i class="bi bi-lock"></i></span>#}
-{#          {{ form.password1 }}#}
-{#        </div>#}
-{#        {{ form.password1.errors }}#}
-{#      </div>#}
-{#      <!-- Confirm Password Field -->#}
-{#      <div class="mb-4">#}
-{#        <div class="input-group">#}
-{#          <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>#}
-{#          {{ form.password2 }}#}
-{#        </div>#}
-{#        {{ form.password2.errors }}#}
-{#      </div>#}
-{#      <button type="submit" class="btn btn-primary">Register</button>#}
-{#    </form>#}
-{#    <div class="mt-4 text-center login-link">#}
-{#      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>#}
-{#    </div>#}
-{#  </div>#}
-{#</main>#}
-{#<!-- Bootstrap JS Bundle -->#}
-{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>#}
-{#</body>#}
-{#</html>#}
-{##}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Lab Lynx</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(135deg, rgba(29,175,200,0.9), rgba(18,103,156,0.9)),
-                  url("{% static 'assets/img/background1.jpg' %}");
-      background-size: cover;
-      background-position: center;
-      font-family: 'Nunito', sans-serif;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .register-box {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      max-width: 500px;
-      width: 100%;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 1s ease-in-out;
-    }
-    .register-box h2 {
-      color: #0d1b2a;
-      font-weight: 700;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .input-group {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
-      transition: border-color 0.3s;
-      margin-bottom: 25px;
-    }
-    .input-group:hover {
-      border-bottom-color: #dfe7f1;
-    }
-    .input-group:focus-within {
-      border-bottom-color: #0d1b2a;
-    }
-    .input-group-text {
-      background: transparent;
-      border: none;
-      color: #0d1b2a;
-      font-size: 1.2rem;
-    }
-    .form-control {
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      outline: none;
-      border-radius: 0;
-      padding-left: 10px;
-    }
-    .form-control::placeholder {
-      color: #555;
-      font-size: 16px;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #0d1b2a, #1e3c72);
-      border: none;
-      border-radius: 50px;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background 0.3s;
-      width: 100%;
-      margin-top: 20px;
-    }
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #0a1420, #16325a);
-    }
-    .login-link a {
-      color: #0d1b2a;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Lab Lynx</title>
+    <!-- Bootstrap CSS -->
+    
+    <!-- Favicons -->
+
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/img/kebs_logo.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, rgba(29, 175, 200, 0.9), rgba(18, 103, 156, 0.9)),
+            url("{% static 'assets/img/background1.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            font-family: 'Nunito', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .register-box h2 {
+            color: #0d1b2a;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+            transition: border-color 0.3s;
+            margin-bottom: 25px;
+        }
+
+        .input-group:hover {
+            border-bottom-color: #dfe7f1;
+        }
+
+        .input-group:focus-within {
+            border-bottom-color: #0d1b2a;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+            color: #0d1b2a;
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            outline: none;
+            border-radius: 0;
+            padding-left: 10px;
+        }
+
+        .form-control::placeholder {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0d1b2a, #1e3c72);
+            border: none;
+            border-radius: 50px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0a1420, #16325a);
+        }
+
+        .login-link a {
+            color: #0d1b2a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
 <main id="main" class="main">
-  <div class="register-box">
-    <h2><strong><span>Lab Lynx</span></strong></h2>
-    <form method="post" action="{% url 'register' %}">
-      {% csrf_token %}
-      {{ form.non_field_errors }}
-      <!-- Username Field -->
-      <div class="mb-4">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-person"></i></span>
-          {{ form.username }}
+    <div class="register-box">
+        <h2><strong><span>Lab Lynx</span></strong></h2>
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <!-- Username Field -->
+            <div class="mb-4">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    {{ form.username }}
+                </div>
+                {{ form.username.errors }}
+            </div>
+            <!-- Email Field -->
+            <div class="mb-4">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    {{ form.email }}
+                </div>
+                {{ form.email.errors }}
+            </div>
+            <!-- Password Field -->
+            <div class="mb-4">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    {{ form.password1 }}
+                </div>
+                {{ form.password1.errors }}
+            </div>
+            <!-- Confirm Password Field -->
+            <div class="mb-4">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    {{ form.password2 }}
+                </div>
+                {{ form.password2.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div class="mt-4 text-center login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
         </div>
-        {{ form.username.errors }}
-      </div>
-      <!-- Email Field -->      
-      <div class="mb-4">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-          {{ form.email }}
-        </div>
-        {{ form.email.errors }}
-      </div>
-      <!-- Password Field -->
-      <div class="mb-4">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-lock"></i></span>
-          {{ form.password1 }}
-        </div>
-        {{ form.password1.errors }}
-      </div>
-      <!-- Confirm Password Field -->
-      <div class="mb-4">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-          {{ form.password2 }}
-        </div>
-        {{ form.password2.errors }}
-      </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <div class="mt-4 text-center login-link">
-      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
     </div>
-  </div>
 </main>
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

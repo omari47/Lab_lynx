@@ -1,150 +1,9 @@
+{##}
 {#{% extends 'master.html' %}#}
 {##}
-{#{% block content %}#}
-{#<main id="main" class="main">#}
-{#    <div class="container">#}
-{#        <div class="card shadow">#}
-{#            <div class="card-body">#}
-{#                <h2 class="card-title mb-4"><i class="bi bi-tag"></i> Generate Label</h2>#}
-{#                #}
-{#                <div class="row g-3 mb-4">#}
-{#                    <div class="col-md-9">#}
-{#                        <input type="text" id="searchInput" class="form-control form-control-lg" #}
-{#                               placeholder="Enter Sample ID or Batch Number">#}
-{#                    </div>#}
-{#                    <div class="col-md-3">#}
-{#                        <button class="btn btn-primary btn-lg w-100" onclick="searchSample()">#}
-{#                            <i class="bi bi-search"></i> Search#}
-{#                        </button>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#                <div id="labelSection" class="d-none">#}
-{#                    <div class="card border-success">#}
-{#                        <div class="card-header bg-success text-white">#}
-{#                            <h5 class="card-title mb-0">#}
-{#                                <i class="bi bi-file-earmark-pdf"></i> Generated Label#}
-{#                                <span id="certNumber" class="badge bg-light text-dark ms-2"></span>#}
-{#                            </h5>#}
-{#                        </div>#}
-{#                        <div class="card-body">#}
-{#                            <div class="row align-items-center">#}
-{#                                <div class="col-md-8">#}
-{#                                    <div id="labelInfo" class="mb-4">#}
-{#                                        <div class="row g-3">#}
-{#                                            <div class="col-6">#}
-{#                                                <label class="form-label">Sample ID:</label>#}
-{#                                                <div class="fw-bold" id="labelSampleId">-</div>#}
-{#                                            </div>#}
-{#                                            <div class="col-6">#}
-{#                                                <label class="form-label">Batch Number:</label>#}
-{#                                                <div class="fw-bold" id="labelBatchNumber">-</div>#}
-{#                                            </div>#}
-{#                                            <div class="col-6">#}
-{#                                                <label class="form-label">Expiry Date:</label>#}
-{#                                                <div class="fw-bold" id="labelExpiryDate">-</div>#}
-{#                                            </div>#}
-{#                                            <div class="col-6">#}
-{#                                                <label class="form-label">Generated Date:</label>#}
-{#                                                <div class="fw-bold" id="labelGeneratedDate">-</div>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <div class="alert alert-success">#}
-{#                                        <i class="bi bi-check-circle"></i> This label is valid until the expiry date shown#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="col-md-4 text-center">#}
-{#                                    <div id="qrCodePreview" class="mb-3"></div>#}
-{#                                    <div class="d-grid gap-2">#}
-{#                                        <a id="downloadBtn" class="btn btn-success" target="_blank">#}
-{#                                            <i class="bi bi-download"></i> Download PDF#}
-{#                                        </a>#}
-{#                                        <a href="#" id="viewDetailsBtn" class="btn btn-outline-success">#}
-{#                                            <i class="bi bi-eye"></i> View Sample Details#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#                <div id="errorMessage" class="alert alert-danger mt-4 d-none"></div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</main>#}
-{##}
-{#<script>#}
-{#function searchSample() {#}
-{#    const query = document.getElementById('searchInput').value;#}
-{#    const labelSection = document.getElementById('labelSection');#}
-{#    const errorMessage = document.getElementById('errorMessage');#}
-{##}
-{#    fetch(`/generate-label/?query=${query}`)#}
-{#        .then(response => {#}
-{#            if (!response.ok) return response.json().then(err => { throw err });#}
-{#            return response.json();#}
-{#        })#}
-{#        .then(data => {#}
-{#            if (data.error) throw data.error;#}
-{#            #}
-{#        #}
-{#            // Update UI#}
-{#            document.getElementById('labelSampleId').textContent = data.id;#}
-{#            document.getElementById('labelBatchNumber').textContent = data.batch_number;#}
-{#            document.getElementById('labelExpiryDate').textContent = data.expiry_date;#}
-{#            document.getElementById('certNumber').textContent = data.certification_number;#}
-{#            #}
-{#            // Update buttons#}
-{#            const downloadBtn = document.getElementById('downloadBtn');#}
-{#            downloadBtn.href = `/download-label/${data.label_id}/`;#}
-{#            #}
-{#            // Update view details button#}
-{#            document.getElementById('viewDetailsBtn').href = `/sample-details/${data.id}/`;#}
-{#            #}
-{#            // Show QR code if available#}
-{#            if (data.qr_code_url) {#}
-{#                document.getElementById('qrCodePreview').innerHTML = `#}
-{#                    <img src="${data.qr_code_url}" class="img-fluid" alt="QR Code">#}
-{#                `;#}
-{#            }#}
-{##}
-{#            labelSection.classList.remove('d-none');#}
-{#            errorMessage.classList.add('d-none');#}
-{#        })#}
-{#        .catch(error => {#}
-{#            showError(typeof error === 'string' ? error : 'Error fetching sample data');#}
-{#        });#}
-{#}#}
-{##}
-{#function showError(message) {#}
-{#    const errorMessage = document.getElementById('errorMessage');#}
-{#    errorMessage.textContent = message;#}
-{#    errorMessage.classList.remove('d-none');#}
-{#    document.getElementById('labelSection').classList.add('d-none');#}
-{#}#}
-{#</script>#}
-{##}
-{#<style>#}
-{##labelInfo {#}
-{#    background-color: #f8f9fa;#}
-{#    border-radius: 8px;#}
-{#    padding: 20px;#}
-{#    border: 1px solid #dee2e6;#}
-{#}#}
-{##}
-{##qrCodePreview img {#}
-{#    max-width: 200px;#}
-{#    height: auto;#}
-{#    border: 2px solid #dee2e6;#}
-{#    border-radius: 8px;#}
-{#    padding: 10px;#}
-{#}#}
-{#</style>#}
+{#{% block title %}#}
+{#    <title>Generate Label - Sample Track</title>#}
 {#{% endblock %}#}
-{#{% extends 'master.html' %}#}
 {##}
 {#{% block content %}#}
 {#<main id="main" class="main">#}
@@ -152,19 +11,21 @@
 {#        <div class="card shadow">#}
 {#            <div class="card-body">#}
 {#                <h2 class="card-title mb-4"><i class="bi bi-tag"></i> Generate Label</h2>#}
-{#                #}
-{#                <div class="row g-3 mb-4">#}
-{#                    <div class="col-md-9">#}
+{##}
+{#                <!-- Search Form -->#}
+{#                <div class="row g-3 mb-5">#}
+{#                    <div class="col-md-8">#}
 {#                        <input type="text" id="searchInput" class="form-control form-control-lg" #}
 {#                               placeholder="Enter Sample ID or Batch Number">#}
 {#                    </div>#}
-{#                    <div class="col-md-3">#}
+{#                    <div class="col-md-4">#}
 {#                        <button class="btn btn-primary btn-lg w-100" onclick="searchSample()">#}
-{#                            <i class="bi bi-search"></i> Search#}
+{#                            <i class="bi bi-search"></i> Search Sample#}
 {#                        </button>#}
 {#                    </div>#}
 {#                </div>#}
 {##}
+{#                <!-- Label Preview Section -->#}
 {#                <div id="labelSection" class="d-none">#}
 {#                    <div class="card border-success">#}
 {#                        <div class="card-header bg-success text-white">#}
@@ -189,6 +50,10 @@
 {#                                            <div class="col-6">#}
 {#                                                <label class="form-label">Expiry Date:</label>#}
 {#                                                <div class="fw-bold" id="labelExpiryDate">-</div>#}
+{#                                            </div>#}
+{#                                            <div class="col-6">#}
+{#                                                <label class="form-label">Certification No:</label>#}
+{#                                                <div class="fw-bold" id="labelCertification">-</div>#}
 {#                                            </div>#}
 {#                                            <div class="col-6">#}
 {#                                                <label class="form-label">Generated Date:</label>#}
@@ -216,6 +81,7 @@
 {#                    </div>#}
 {#                </div>#}
 {##}
+{#                <!-- Error Message -->#}
 {#                <div id="errorMessage" class="alert alert-danger mt-4 d-none"></div>#}
 {#            </div>#}
 {#        </div>#}
@@ -229,25 +95,21 @@
 {#    const errorMessage = document.getElementById('errorMessage');#}
 {##}
 {#    fetch(`/generate-label/?query=${query}`)#}
-{#        .then(response => {#}
-{#            if (!response.ok) return response.json().then(err => { throw err });#}
-{#            return response.json();#}
-{#        })#}
+{#        .then(response => response.json())#}
 {#        .then(data => {#}
 {#            if (data.error) throw data.error;#}
 {#            #}
 {#            // Update UI with returned data#}
-{#            document.getElementById('labelSampleId').textContent = data.id;#}
+{#            document.getElementById('labelSampleId').textContent = data.sample_id;#}
 {#            document.getElementById('labelBatchNumber').textContent = data.batch_number;#}
 {#            document.getElementById('labelExpiryDate').textContent = data.expiry_date;#}
+{#            document.getElementById('labelCertification').textContent = data.certification_number;#}
 {#            document.getElementById('labelGeneratedDate').textContent = data.generated_date;#}
 {#            document.getElementById('certNumber').textContent = data.certification_number;#}
 {#            #}
 {#            // Update buttons with proper URLs#}
-{#            const downloadBtn = document.getElementById('downloadBtn');#}
-{#            downloadBtn.href = `/download-label/${data.label_id}/`;#}
-{#            #}
-{#            document.getElementById('viewDetailsBtn').href = `/sample-details/${data.id}/`;#}
+{#            document.getElementById('downloadBtn').href = `/download-label/${data.label_id}/`;#}
+{#            document.getElementById('viewDetailsBtn').href = `/sample-details/${data.sample_id}/`;#}
 {#            #}
 {#            // Show QR code if available#}
 {#            if (data.qr_code_url) {#}
@@ -290,10 +152,12 @@
 {#}#}
 {#</style>#}
 {#{% endblock %}#}
+{##}
 {% extends 'master.html' %}
+{% load static %}
 
 {% block title %}
-    <title>Generate Label - Sample Track</title>
+    <title>Printable Sample Label - KEBS</title>
 {% endblock %}
 
 {% block content %}
@@ -301,71 +165,66 @@
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-                <h2 class="card-title mb-4"><i class="bi bi-tag"></i> Generate Label</h2>
-
-                <!-- Search Form -->
-                <div class="row g-3 mb-5">
-                    <div class="col-md-8">
-                        <input type="text" id="searchInput" class="form-control form-control-lg" 
-                               placeholder="Enter Sample ID or Batch Number">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-primary btn-lg w-100" onclick="searchSample()">
-                            <i class="bi bi-search"></i> Search Sample
-                        </button>
-                    </div>
-                </div>
+                <h2 class="card-title mb-4 text-center">
+                    <img src="{% static 'assets/img/kebs_logo.png' %}" alt="KEBS Logo" width="120">
+                    <br> KEBS Sample Label
+                </h2>
 
                 <!-- Label Preview Section -->
-                <div id="labelSection" class="d-none">
-                    <div class="card border-success">
-                        <div class="card-header bg-success text-white">
-                            <h5 class="card-title mb-0">
-                                <i class="bi bi-file-earmark-pdf"></i> Generated Label
-                                <span id="certNumber" class="badge bg-light text-dark ms-2"></span>
-                            </h5>
-                        </div>
+                <div id="labelSection">
+                    <div class="card border-dark">
                         <div class="card-body">
-                            <div class="row align-items-center">
+                            <div class="row">
+                                <!-- Left Column -->
                                 <div class="col-md-8">
-                                    <div id="labelInfo" class="mb-4">
-                                        <div class="row g-3">
+                                    <div id="labelInfo" class="mb-4 p-3 border rounded bg-light">
+                                        <div class="row">
                                             <div class="col-6">
-                                                <label class="form-label">Sample ID:</label>
-                                                <div class="fw-bold" id="labelSampleId">-</div>
+                                                <label class="fw-bold">Sample ID:</label>
+                                                <div class="fs-5 text-primary" id="labelSampleId">-</div>
                                             </div>
                                             <div class="col-6">
-                                                <label class="form-label">Batch Number:</label>
-                                                <div class="fw-bold" id="labelBatchNumber">-</div>
+                                                <label class="fw-bold">Batch Number:</label>
+                                                <div class="fs-5 text-primary" id="labelBatchNumber">-</div>
                                             </div>
                                             <div class="col-6">
-                                                <label class="form-label">Expiry Date:</label>
-                                                <div class="fw-bold" id="labelExpiryDate">-</div>
+                                                <label class="fw-bold">Expiry Date:</label>
+                                                <div class="fs-5 text-danger" id="labelExpiryDate">-</div>
                                             </div>
                                             <div class="col-6">
-                                                <label class="form-label">Certification No:</label>
-                                                <div class="fw-bold" id="labelCertification">-</div>
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="form-label">Generated Date:</label>
-                                                <div class="fw-bold" id="labelGeneratedDate">-</div>
+                                                <label class="fw-bold">Certification No:</label>
+                                                <div class="fs-5 text-success" id="labelCertification">-</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="alert alert-success">
-                                        <i class="bi bi-check-circle"></i> This label is valid until the expiry date shown.
+                                    
+                                    <!-- Lab Testing Section -->
+                                    <div class="border p-3 rounded bg-white">
+                                        <h5 class="text-center fw-bold">Lab Testing & Compliance</h5>
+                                        <div class="mb-2">
+                                            <label class="fw-bold">Tests to be Conducted:</label>
+                                            <textarea class="form-control" rows="3" placeholder="Record tests here..."></textarea>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="fw-bold">Compliance Status:</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="compliant">
+                                                <label class="form-check-label" for="compliant">Compliant</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="nonCompliant">
+                                                <label class="form-check-label" for="nonCompliant">Non-Compliant</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Right Column (QR Code) -->
                                 <div class="col-md-4 text-center">
                                     <div id="qrCodePreview" class="mb-3"></div>
-                                    <div class="d-grid gap-2">
-                                        <a id="downloadBtn" class="btn btn-success" target="_blank">
-                                            <i class="bi bi-download"></i> Download PDF
-                                        </a>
-                                        <a href="#" id="viewDetailsBtn" class="btn btn-outline-success">
-                                            <i class="bi bi-eye"></i> View Sample Details
-                                        </a>
-                                    </div>
+                                    <button class="btn btn-success btn-lg w-100" onclick="window.print()">
+                                        <i class="bi bi-printer"></i> Print Label
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -395,12 +254,6 @@ function searchSample() {
             document.getElementById('labelBatchNumber').textContent = data.batch_number;
             document.getElementById('labelExpiryDate').textContent = data.expiry_date;
             document.getElementById('labelCertification').textContent = data.certification_number;
-            document.getElementById('labelGeneratedDate').textContent = data.generated_date;
-            document.getElementById('certNumber').textContent = data.certification_number;
-            
-            // Update buttons with proper URLs
-            document.getElementById('downloadBtn').href = `/download-label/${data.label_id}/`;
-            document.getElementById('viewDetailsBtn').href = `/sample-details/${data.sample_id}/`;
             
             // Show QR code if available
             if (data.qr_code_url) {
@@ -428,18 +281,25 @@ function showError(message) {
 </script>
 
 <style>
+/* Label Preview Styling */
 #labelInfo {
     background-color: #f8f9fa;
     border-radius: 8px;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #dee2e6;
 }
-#qrCodePreview img {
-    max-width: 200px;
-    height: auto;
-    border: 2px solid #dee2e6;
-    border-radius: 8px;
-    padding: 10px;
+
+/* Print-specific Styles */
+@media print {
+    .btn, .form-control {
+        display: none !important;
+    }
+    .card-header {
+        display: none;
+    }
+    #labelInfo {
+        border: none;
+    }
 }
 </style>
 {% endblock %}

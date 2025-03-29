@@ -1,167 +1,131 @@
-{% extends 'master.html' %}
 
-{% block title %}
-    <title>Data Management - Sample Track</title>
-{% endblock %}
+{% extends 'master.html' %}
+{% block title %} <title>Data Management - Lab Lynx</title> {% endblock %}
 
 {% block content %}
-<!-- ======= Main Content ======= -->
-<main id="main" class="main">
-    <div class="container">
-        <div class="card shadow">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="card-title"><i class="bi bi-database"></i> Data Management</h2>
-                    <div class="btn-group">
-                        <a href="?export=csv{% if search_query %}&q={{ search_query }}{% endif %}" 
-                           class="btn btn-outline-secondary">
-                            <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
-                        </a>
-                        <a href="?export=excel{% if search_query %}&q={{ search_query }}{% endif %}" 
-                           class="btn btn-outline-secondary">
-                            <i class="bi bi-file-earmark-excel"></i> Export Excel
-                        </a>
-                    </div>
-                </div>
+<main class="container mt-4">
+    <h2>Data Management Center</h2>
+    
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs" id="dataTabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#samples">Samples</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#testResults">Test Results</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#labels">Labels</a>
+        </li>
+    </ul>
 
-                <!-- Search Bar -->
-                <div class="mb-4">
-                    <form id="searchForm" method="get">
-                        <div class="input-group">
-                            <input type="text" 
-                                   name="q" 
-                                   class="form-control form-control-lg" 
-                                   placeholder="Search samples..."
-                                   value="{{ search_query }}">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-search"></i> Search
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <div class="tab-content mt-3">
+        <!-- Samples Tab -->
+        <div id="samples" class="tab-pane fade show active">
+            <h3>Submitted Samples</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Sample ID</th>
+                        <th>Batch No.</th>
+                        <th>Type</th>
+                        <th>Origin</th>
+                        <th>Status</th>
+                        <th>Submitted By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sample in samples %}
+                    <tr>
+                        <td>{{ sample.sample_id }}</td>
+                        <td>{{ sample.batch_number }}</td>
+                        <td>{{ sample.sample_type }}</td>
+                        <td>{{ sample.sample_origin }}</td>
+                        <td>{{ sample.testing_status }}</td>
+                        <td>{{ sample.submitted_by.username }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No samples found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                <!-- Samples Table -->
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Sample ID</th>
-                                <th>Batch Number</th>
-                                <th>Type</th>
-                                <th>Origin</th>
-                                <th>Status</th>
-                                <th>Test Results</th>
-                                <th>Label Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for sample in samples %}
-                            <tr>
-                                <td>{{ sample.id }}</td>
-                                <td>{{ sample.batch_number }}</td>
-                                <td>{{ sample.sample_type }}</td>
-                                <td>{{ sample.origin }}</td>
-                                <td>
-                                    <span class="badge {% if sample.status == 'Completed' %}bg-success{% else %}bg-warning{% endif %}">
-                                        {{ sample.status }}
-                                    </span>
-                                </td>
-                                <td>
-                                    {% if sample.test_results %}
-                                    <a href="{% url 'test_results_detail' sample.id %}" 
-                                       class="btn btn-sm btn-outline-primary">
-                                        View Results
-                                    </a>
-                                    {% else %}
-                                    <span class="text-muted">Pending</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <span class="badge {% if sample.label_status == 'Generated' %}bg-success{% else %}bg-secondary{% endif %}">
-                                        {{ sample.label_status }}
-                                    </span>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4">
-                                    No samples found matching your criteria
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Test Results Tab -->
+        <div id="testResults" class="tab-pane fade">
+            <h3>Test Results</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Test ID</th>
+                        <th>Sample ID</th>
+                        <th>Quality Analysis</th>
+                        <th>Compliance</th>
+                        <th>Test Date</th>
+                        <th>Conducted By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in test_results %}
+                    <tr>
+                        <td>{{ result.id }}</td>
+                        <td>{{ result.sample.sample_id }}</td>
+                        <td>{{ result.quality_analysis }}</td>
+                        <td>
+                            {% if result.compliance_status %}
+                                <span class="badge bg-success">Compliant</span>
+                            {% else %}
+                                <span class="badge bg-danger">Non-Compliant</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ result.test_date }}</td>
+                        <td>{{ result.conducted_by.username }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No test results found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                <!-- Pagination -->
-                {% if is_paginated %}
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" 
-                               href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">
-                                Previous
-                            </a>
-                        </li>
-                        {% endif %}
-                        
-                        {% for num in page_obj.paginator.page_range %}
-                        <li class="page-item {% if num == page_obj.number %}active{% endif %}">
-                            <a class="page-link" 
-                               href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">
-                                {{ num }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                        
-                        {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" 
-                               href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">
-                                Next
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                {% endif %}
-            </div>
+        <!-- Labels Tab -->
+        <div id="labels" class="tab-pane fade">
+            <h3>Generated Labels</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Label ID</th>
+                        <th>Sample ID</th>
+                        <th>Generated Date</th>
+                        <th>Expiry Date</th>
+                        <th>Certification No.</th>
+                        <th>Generated By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for label in labels %}
+                    <tr>
+                        <td>{{ label.id }}</td>
+                        <td>{{ label.sample.sample_id }}</td>
+                        <td>{{ label.generated_date }}</td>
+                        <td>{{ label.expiry_date }}</td>
+                        <td>{{ label.certification_number }}</td>
+                        <td>{{ label.generated_by.username }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No labels found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <a href="{% url 'export_data_csv' %}" class="btn btn-primary mt-3">Export Data as CSV</a>
 </main>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.querySelector('input[name="q"]');
-    const searchForm = document.getElementById('searchForm');
-    
-    // Live search functionality
-    searchInput.addEventListener('input', function() {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            searchForm.submit();
-        }, 500);
-    });
-});
-</script>
-
-<style>
-.table-hover tbody tr:hover {
-    background-color: rgba(13, 110, 253, 0.05);
-    cursor: pointer;
-}
-
-.badge {
-    font-size: 0.9em;
-    padding: 0.5em 0.75em;
-    min-width: 80px;
-    display: inline-block;
-    text-align: center;
-}
-
-.pagination {
-    margin-top: 2rem;
-}
-</style>
 {% endblock %}

@@ -1,11 +1,13 @@
+
 {% extends 'master.html' %}
+{% load static %}
+<script src="{% static 'js/label_generation.js' %}" defer></script>
 
 {% block title %}
     <title>Generate Label - Sample Track</title>
 {% endblock %}
 
 {% block content %}
-<!-- ======= Main Content ======= -->
 <main id="main" class="main">
     <div class="container">
         <div class="card">
@@ -15,11 +17,11 @@
                 <!-- Search Form -->
                 <div class="row g-3 mb-5">
                     <div class="col-md-8">
-                        <input type="text" id="searchInput" class="form-control form-control-lg" 
+                        <input type="text" id="searchInput" class="form-control form-control-lg"
                                placeholder="Enter Sample ID or Batch Number">
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-primary btn-lg w-100" onclick="searchSample()">
+                        <button class="btn btn-primary btn-lg w-100" id="searchButton">
                             <i class="bi bi-search"></i> Search Sample
                         </button>
                     </div>
@@ -29,15 +31,16 @@
                 <div id="labelSection" class="d-none">
                     <div class="card border-success">
                         <div class="card-header bg-success text-white">
-                            <h5 class="card-title mb-0">Generated Label Preview</h5>
+                            <h5 class="card-title mb-0">KEBS Sample Label</h5>
                         </div>
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <!-- Left Column -->
                                 <div class="col-md-8">
                                     <div id="labelContent">
+                                        <img src="{% static 'assets/img/kebs_logo.png' %}" alt="KEBS Logo" class="mb-3" width="150">
                                         <div class="mb-3">
-                                            <h3 class="text-success">KEBS Certification Mark</h3>
+                                            <h3 class="text-success">KEBS Certification</h3>
                                             <div class="d-flex gap-3 mb-3">
                                                 <div class="fw-bold">Sample ID:</div>
                                                 <div id="labelSampleId">-</div>
@@ -54,21 +57,24 @@
                                                 <div class="fw-bold">Certification No:</div>
                                                 <div id="labelCertification">-</div>
                                             </div>
+                                            <div class="d-flex gap-3 mb-3">
+                                                <div class="fw-bold">Tests to be Conducted:</div>
+                                                <textarea class="form-control" rows="2"></textarea>
+                                            </div>
+                                            <div class="d-flex gap-3 mb-3">
+                                                <div class="fw-bold">Complied:</div>
+                                                <input type="checkbox">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Right Column (QR Code) -->
                                 <div class="col-md-4 text-center">
                                     <div id="qrCodePreview" class="mb-3"></div>
-                                    <div class="btn-group w-100">
-                                        <a id="downloadBtn" class="btn btn-outline-success" disabled>
-                                            <i class="bi bi-download"></i> Download PDF
-                                        </a>
-                                        <button class="btn btn-success" onclick="window.print()">
-                                            <i class="bi bi-printer"></i> Print
-                                        </button>
-                                    </div>
+                                    <button class="btn btn-success w-100" onclick="window.print()">
+                                        <i class="bi bi-printer"></i> Print Label
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -82,63 +88,14 @@
     </div>
 </main>
 
-<script>
-function searchSample() {
-    const query = document.getElementById('searchInput').value;
-    const labelSection = document.getElementById('labelSection');
-    const errorMessage = document.getElementById('errorMessage');
-
-    fetch(`/api/samples/?search=${query}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                const sample = data[0];
-                // Update label preview
-                document.getElementById('labelSampleId').textContent = sample.id;
-                document.getElementById('labelBatchNumber').textContent = sample.batch_number;
-                document.getElementById('labelCertification').textContent = sample.certification_number;
-                document.getElementById('labelExpiryDate').textContent = sample.expiry_date;
-                
-                // Enable download button
-                const downloadBtn = document.getElementById('downloadBtn');
-                downloadBtn.href = `/download-label/${sample.label_id}/`;
-                downloadBtn.removeAttribute('disabled');
-                
-                // Show label section
-                labelSection.classList.remove('d-none');
-                errorMessage.classList.add('d-none');
-            } else {
-                showError('Sample not found');
-            }
-        })
-        .catch(error => showError('Error fetching sample data'));
-}
-
-function showError(message) {
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
-    errorMessage.classList.remove('d-none');
-    document.getElementById('labelSection').classList.add('d-none');
-}
-</script>
+<!-- Load JavaScript -->
+<script src="{% static 'js/label_generation.js' %}"></script>
 
 <style>
-/* Label Preview Styling */
-#labelContent {
-    border: 2px solid #198754;
-    border-radius: 8px;
-    padding: 20px;
-    background: #f8fff9;
-}
-
-/* Print-specific Styles */
+/* Hide buttons on print */
 @media print {
-    .card-header, .btn-group {
+    .btn, .row, .card-header {
         display: none !important;
-    }
-    #labelContent {
-        border: none;
-        padding: 0;
     }
 }
 </style>

@@ -21,7 +21,7 @@ from django.urls import path, include
 
 from sample_mis import views
 from sample_mis.api.views import recent_activities
-from sample_mis.views import sample_api
+from sample_mis.views import sample_api, data_management, export_samples_csv, generate_label_api
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -46,7 +46,7 @@ urlpatterns = [
                   path('generate-label/', views.label_generation, name='label_generation'),
                   path('download-label/<int:label_id>/', views.download_label, name='download_label'),
                   path('samples/<int:sample_id>/test/', views.test_results, name='test_results'),
-
+                  path("generate-label/", generate_label_api, name="generate_label"),
                   # Data Management
                   path('export-csv/', views.export_samples_csv, name='export_csv'),
                   path('testing-results/', views.testing_results, name='testing_results'),
@@ -62,8 +62,8 @@ urlpatterns = [
                   path('download-label/<int:label_id>/', views.download_label, name='download_label'),
                   path('download-label/<uuid:uuid>/', views.download_label, name='download_label'),
 
-
-
+                  path('data-management/', data_management, name='data_management'),
+                  path('export-data-csv/', export_samples_csv, name='export_data_csv'),
                   path('data-management/', views.data_management, name='data_management'),
                   path('api/recent-activities/', recent_activities, name='recent_activities'),
                   path('api/samples/', sample_api, name='sample_api'),

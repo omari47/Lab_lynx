@@ -65,3 +65,4 @@ class SampleTestResultAdmin(admin.ModelAdmin):
 class LabelAdmin(admin.ModelAdmin):
     list_display = ('certification_number', 'expiry_date', 'sample')
     search_fields = ('certification_number',)
+
